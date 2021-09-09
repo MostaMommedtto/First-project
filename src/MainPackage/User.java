@@ -7,7 +7,7 @@ import java.util.UUID;
 public class User extends CSVFile{
 
     private final UUID uuid = UUID.randomUUID();
-    public static final String filePath = "E:\\projects\\Java\\First project\\userInfo.csv";
+    public static final String filePath = "userInfo.csv";
     private String firstName;
     private String lastName;
     private String userName;
