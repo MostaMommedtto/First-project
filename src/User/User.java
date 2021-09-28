@@ -1,13 +1,13 @@
-package MainPackage;
+package User;
+
+import CSVFile.CSVFile;
 
 import java.io.*;
-import java.util.Scanner;
 import java.util.UUID;
 
-public class User extends CSVFile{
+public class User {
 
-    private final UUID uuid = UUID.randomUUID();
-    public static final String filePath = "userInfo.csv";
+    private final UUID userID = UUID.randomUUID();
     private String firstName;
     private String lastName;
     private String userName;
@@ -21,7 +21,7 @@ public class User extends CSVFile{
     }
 
     public UUID getUuid() {
-        return uuid;
+        return userID;
     }
 
 
@@ -41,14 +41,18 @@ public class User extends CSVFile{
         return password;
     }
 
+    public static String convertObjectToString(User client){
+        String delimiter = ",";
+        String convertedObject = String.join(delimiter,client.firstName + delimiter + client.lastName + delimiter + client.userName + delimiter + client.password + delimiter + client.userID);
+        return convertedObject;
+    }
 
     public static void register(User client) throws IOException {
-        writeData(client, client.filePath);
+        String filePath = "src\\Files\\user_info.csv";
+        CSVFile.NewCSVFile(filePath);
+        CSVFile.writeData(filePath,convertObjectToString(client));
     }
 
-    public static void display() throws FileNotFoundException {
-        readData(User.filePath);
-    }
 
 
 
