@@ -1,8 +1,6 @@
 package MainPackage;
 
-import CSVFile.CSVFile;
 import User.User;
-
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -25,7 +23,7 @@ public class Main {
                 String password = input.next();
                 User.register(new User(firstName,lastName,userName,password));
             } else if (choice == 2) {
-                CSVFile.readData("src\\Files\\user_info.csv");
+                User.displayData();
             } else if (choice == 3) {
                 continue;
             } else if (choice == 4) {

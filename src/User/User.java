@@ -1,8 +1,8 @@
 package User;
 
 import CSVFile.CSVFile;
-
 import java.io.*;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class User {
@@ -12,6 +12,7 @@ public class User {
     private String lastName;
     private String userName;
     private String password;
+    final String filePath = "src\\Files\\user_info.csv";
 
     public User(String firstName, String lastName, String userName, String password) {
         this.firstName = firstName;
@@ -48,12 +49,15 @@ public class User {
     }
 
     public static void register(User client) throws IOException {
-        String filePath = "src\\Files\\user_info.csv";
-        CSVFile.NewCSVFile(filePath);
-        CSVFile.writeData(filePath,convertObjectToString(client));
+        CSVFile.checkTheFile(client.filePath);
+        CSVFile.writeData(client.filePath, convertObjectToString(client));
     }
 
+    public static void displayData() throws IOException{
+        ArrayList<Object> returnedArrayList = CSVFile.readData("src\\Files\\user_info.csv");
+        for(int i = 0 ; i < returnedArrayList.size() ; i++){
+            System.out.println(returnedArrayList.get(i));
+        }
 
-
-
+    }
 }
