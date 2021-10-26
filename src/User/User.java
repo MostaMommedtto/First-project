@@ -3,6 +3,7 @@ package User;
 import CSVFile.CSVFile;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.UUID;
 
 public class User {
@@ -12,7 +13,8 @@ public class User {
     private String lastName;
     private String userName;
     private String password;
-    final String filePath = "src\\Files\\user_info.csv";
+    private static final String filePath = "src\\Files\\user_info.csv";
+
 
     public User(String firstName, String lastName, String userName, String password) {
         this.firstName = firstName;
@@ -20,11 +22,6 @@ public class User {
         this.userName = userName;
         this.password = password;
     }
-
-    public UUID getUuid() {
-        return userID;
-    }
-
 
     public String getFirstName() {
         return firstName;
@@ -42,22 +39,22 @@ public class User {
         return password;
     }
 
-    public static String convertObjectToString(User client){
-        String delimiter = ",";
-        String convertedObject = String.join(delimiter,client.firstName + delimiter + client.lastName + delimiter + client.userName + delimiter + client.password + delimiter + client.userID);
-        return convertedObject;
-    }
+    public UUID getUserID() { return userID; }
+
 
     public static void register(User client) throws IOException {
-        CSVFile.checkTheFile(client.filePath);
-        CSVFile.writeData(client.filePath, convertObjectToString(client));
+        CSVFile.check(filePath);
+        CSVFile.write(filePath,client);
     }
 
-    public static void displayData() throws IOException{
-        ArrayList<Object> returnedArrayList = CSVFile.readData("src\\Files\\user_info.csv");
-        for(int i = 0 ; i < returnedArrayList.size() ; i++){
-            System.out.println(returnedArrayList.get(i));
+    public static ArrayList<Object> convertStringToObject() throws IOException {
+        ArrayList<Object> objectList = new ArrayList<Object>(Collections.singleton(CSVFile.read(filePath)));
+        return objectList;
+    }
+    public static void display() throws IOException {
+        ArrayList<Object> convertedArray = convertStringToObject();
+        for (int i=0;i<convertedArray.size();i++){
+            System.out.println(convertedArray.get(i));
         }
-
     }
 }
